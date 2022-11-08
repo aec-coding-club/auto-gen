@@ -1,5 +1,20 @@
+#!/usr/bin/env python
+
+"""
+gen-cards.py: Script to mass-generate identity cards & handouts using email
+as the primary key to compile all student data, given
+  - image source directory, with items labelled as {email}.png 
+  - CSV with student data
+"""
+
 import traceback, os, textwrap, csv, glob
 from PIL import Image, ImageFont, ImageDraw
+
+__author__ = "Jayanta Pandit"
+__version__ = "1.0.0"
+__email__ = "jay.dnb@outlook.in"
+__license__ = "GPL"
+__date__ = "Nov 8, 2022"
 
 # colours
 RED = '#cd2626'

@@ -16,6 +16,9 @@ __email__ = "jay.dnb@outlook.in"
 __license__ = "GPL"
 __date__ = "Nov 8, 2022"
 
+import traceback, os, textwrap, csv, glob
+from PIL import Image, ImageFont, ImageDraw
+
 # colours
 RED = '#cd2626'
 BLACK = '#000000'
@@ -40,7 +43,7 @@ IDX_UNIQUE_ID = 0
 IDX_NAME = 1
 IDX_DEPARTMENT = 3
 IDX_ADDRESS = 5
-IDX_GRADUATION_YEAR = 2
+IDX_CURRENT_YEAR = 2
 IDX_PHONE_NO = 6
 IDX_EMAIL_ID = 7
 
@@ -144,9 +147,15 @@ if __name__ == "__main__":
 
             # saving as *.png
             image.save(f'./{HEADSHOT_SRC_DIR}/{datarow[IDX_EMAIL_ID]}.png')
-
+            
             # generate
             print('\u001b[31m[Generating...]\u001b[30m \u001b[32m', datarow[IDX_UNIQUE_ID], '\u001b[32m')
+
+            # accounting for 'BCA'
+            grad_year = int(BATCH_SERIAL_MAP[datarow[IDX_CURRENT_YEAR]])
+            if datarow[IDX_DEPARTMENT] == 'BCA':
+                grad_year -= 1
+            
             make(
                 # Unique ID
                 datarow[IDX_UNIQUE_ID],
@@ -159,7 +168,7 @@ if __name__ == "__main__":
                 # Address line 1, line 2
                 datarow[IDX_ADDRESS], 
                 # Outgoing batch year
-                BATCH_SERIAL_MAP[datarow[IDX_GRADUATION_YEAR]],
+                str(grad_year),
                 # Phone no.
                 datarow[IDX_PHONE_NO],
                 # Email ID

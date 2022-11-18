@@ -2,7 +2,9 @@
 
 """
 memc-mailer.py: Script to mass-mail membership cards
-  - image source directory, with items labelled as {[1, 2]}.png 
+  - output source directory labelled `out` in script's root (output dump of gen-cards.py)
+  - sub dirs formatted as 'out/{UID}%{EMAIL}'
+  - memc items labelled ['out/{UID}%{email}/1.png', 'out/{UID}%{email}/2.png']
 """
 
 import os, smtplib, time
@@ -24,7 +26,7 @@ def send_memc(s: smtplib.SMTP, email: str, side1_p: str, side2_p: str):
     msg = EmailMessage()
     msg['Subject'] = 'AECCC Membership Card (Soft Copy)'
     msg['From'] = f'AECCC Coding Club <{SMTP_EMAIL}>'
-    msg['To'] = email
+    msg['To'] = email.lower()
 
     # Set the plain-text body.
     msg.set_content(
